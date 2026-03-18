@@ -138,7 +138,7 @@
           <div v-for="(item, index) in currentItinerary" :key="item.id" class="mb-4 relative iten-card" :data-id="item.id">
             
             <!-- 第一個行程且為航班的特殊 UI -->
-            <div v-if="index === 0 && item.type === 'flight'" class="bg-gradient-to-br from-busan-600 to-busan-900 text-white rounded-2xl p-5 shadow-md relative overflow-hidden tap-effect" @click="openMap(item.name)">
+            <div v-if="index === 0 && item.type === 'flight'" class="bg-gradient-to-br from-busan-600 to-busan-900 text-white rounded-2xl p-5 shadow-md relative overflow-hidden tap-effect" @click="openMap(item)">
               <div class="absolute top-0 right-0 opacity-10 text-8xl -mt-4 -mr-4"><i class="ph-fill ph-airplane-tilt"></i></div>
               <div class="flex justify-between items-center mb-4 relative z-10">
                 <span class="bg-white/20 text-xs py-1 px-3 rounded-full backdrop-blur-sm">航班資訊</span>
@@ -165,7 +165,7 @@
             </div>
 
             <!-- 一般行程卡片 -->
-            <div v-else class="bg-white rounded-2xl p-4 shadow-soft border border-slate-100 flex gap-4 items-start tap-effect relative" @click="openMap(item.name)">
+            <div v-else class="bg-white rounded-2xl p-4 shadow-soft border border-slate-100 flex gap-4 items-start tap-effect relative" @click="openMap(item)">
               <!-- 拖曳把手 -->
               <div class="mt-1 text-slate-300 drag-handle cursor-grab active:cursor-grabbing px-1"><i class="ph ph-dots-six-vertical text-xl"></i></div>
               
@@ -796,10 +796,30 @@ const app = createApp({
 
     const closeModal = () => { activeModal.value = null; };
 
-    // Map Action (改用 a 標籤確保手機端開啟)
-    const openMap = (query) => {
+    // Map Action (改用 a 標籤確保手機端開啟，優先使用韓文地址)
+    const openMap = (itemOrQuery) => {
+      let query = '';
+      if (typeof itemOrQuery === 'string') {
+        query = itemOrQuery;
+      } else {
+        // 優先順序：韓文地址 > 韓文名稱 > 中文名稱
+        query = itemOrQuery.addressKr || itemOrQuery.nameKr || itemOrQuery.name;
+      }
+
       const cleanQuery = query.replace(/\s*\(.*?\)\s*/g, '').trim();
-      const encoded = encodeURIComponent(cleanQuery + ' 釜山');
+      
+      // 判斷查詢字串是否包含韓文
+      const isKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(cleanQuery);
+      let searchStr = cleanQuery;
+      
+      // Naver Map 主要是韓文圖資，全中文會搜不到，在此盡量補上韓文的「釜山」提示
+      if (!isKorean) {
+        searchStr = `부산 ${cleanQuery}`;
+      } else if (!searchStr.includes('부산') && typeof itemOrQuery === 'string') {
+        searchStr = `${cleanQuery} 부산`;
+      }
+
+      const encoded = encodeURIComponent(searchStr);
       const url = `https://map.naver.com/p/search/${encoded}`;
       const link = document.createElement('a');
       link.href = url;
