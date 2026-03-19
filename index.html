@@ -144,8 +144,8 @@
               </label>
             </div>
 
-            <button @click="openDailyRoute" class="bg-white/95 backdrop-blur-sm text-slate-800 text-[11px] font-bold py-1.5 px-3 rounded-xl shadow-sm flex items-center justify-center gap-1 w-max tap-effect hover:bg-white transition-colors">
-              <i class="ph-fill ph-navigation-arrow text-busan-600"></i> 一鍵 Google Maps 串聯導航
+            <button @click="copyDailyRoute" class="bg-white/95 backdrop-blur-sm text-slate-800 text-[11px] font-bold py-1.5 px-3 rounded-xl shadow-sm flex items-center justify-center gap-1 w-max tap-effect hover:bg-white transition-colors">
+              <i class="ph-fill ph-copy text-busan-600"></i> 一鍵複製今日地址 (供 Naver 排程)
             </button>
           </div>
         </div>
@@ -227,13 +227,13 @@
               <button @click.stop="editItinerary(item)" class="p-2 text-slate-400 hover:text-busan-600 bg-slate-50 rounded-full"><i class="ph ph-pencil-simple"></i></button>
             </div>
 
-            <!-- 交通時間 (顯示在卡片之間，若非最後一筆) -->
+            <!-- 交通時間 (點擊可開啟 A 到 B 導航) -->
             <div v-if="index < currentItinerary.length - 1" class="flex justify-center my-2 relative">
               <div class="absolute left-10 top-0 bottom-0 w-px bg-dashed border-l-2 border-slate-200 border-dashed z-0"></div>
-              <div class="bg-slate-100 text-slate-500 text-xs px-3 py-1 rounded-full flex items-center gap-1 z-10 border border-white">
+              <button @click.stop="openPointToPoint(item, currentItinerary[index+1])" class="bg-slate-100 hover:bg-busan-50 text-slate-500 hover:text-busan-600 text-[10px] font-bold px-3 py-1 rounded-full flex items-center gap-1 z-10 border border-white transition-colors shadow-sm tap-effect">
                 <i :class="getTransportIcon(item.transportType)"></i>
-                <span>{{ item.transportTime }}</span>
-              </div>
+                <span>{{ item.transportTime }} · 點擊看路線</span>
+              </button>
             </div>
           </div>
         </div>
@@ -878,29 +878,27 @@ const app = createApp({
       }
     };
 
-    // 一鍵產生整天 Google Maps 路線
-    const openDailyRoute = () => {
-      // 過濾掉航班等不需要導航的項目
+    // 一鍵複製當日所有地址 (供 Naver 地圖手動排程)
+    const copyDailyRoute = () => {
       const list = currentItinerary.value.filter(i => i.category !== 'flight');
-      if (list.length < 2) {
-        alert('當日需要至少兩個景點才能規劃路線喔！');
-        return;
-      }
+      if (list.length === 0) return;
       
-      const getQuery = (item) => item.addressKr || item.nameKr || item.name;
-      // 起點與終點
-      const origin = encodeURIComponent(getQuery(list[0]) + ' 부산');
-      const destination = encodeURIComponent(getQuery(list[list.length - 1]) + ' 부산');
+      let text = `📍 Day ${selectedDateIdx.value + 1} 釜山行程：\n\n`;
+      list.forEach((item, index) => {
+        text += `${index + 1}. ${item.nameKr || item.name}\n   ${item.addressKr || ''}\n`;
+      });
+      
+      copyText(text);
+    };
 
-      // 中間的中繼點 (Waypoints)
-      let waypoints = '';
-      if (list.length > 2) {
-        waypoints = list.slice(1, -1).map(item => encodeURIComponent(getQuery(item) + ' 부산')).join('|');
-      }
-
-      // 組合 Google Maps Directions URL
-      const url = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}${waypoints ? '&waypoints=' + waypoints : ''}`;
-
+    // 點到點導航 (A 👉 B)
+    const openPointToPoint = (itemA, itemB) => {
+      const getQuery = (item) => item.nameKr || item.name;
+      const origin = getQuery(itemA);
+      const dest = getQuery(itemB);
+      
+      // Kakao Map 支援網頁版直接用文字當起迄點查詢，在韓國非常精準實用
+      const url = `https://map.kakao.com/?sName=${encodeURIComponent(origin)}&eName=${encodeURIComponent(dest)}`;
       const link = document.createElement('a');
       link.href = url;
       link.target = '_blank';
@@ -1046,7 +1044,7 @@ const app = createApp({
       tripDays, weatherMock, currentItinerary, shoppingList, expenses, totalExpense, sortedExpenses, routeImages,
       krwInput, twdOutput, formItinerary, formShopping, formExpense, itineraryListRef,
       getCategoryLabel, getTransportIcon, getExpenseCategoryIcon, getExpenseCategoryColor,
-      openAddModal, editItinerary, closeModal, openMap, copyText, openDailyRoute, handleRouteImageUpload,
+      openAddModal, editItinerary, closeModal, openMap, copyText, copyDailyRoute, openPointToPoint, handleRouteImageUpload,
       saveItinerary, confirmDeleteItinerary, handleImageUpload, saveShopping, deleteShoppingItem, saveExpense, deleteExpense, exportToExcel
     };
   }
