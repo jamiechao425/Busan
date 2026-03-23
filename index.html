@@ -6,6 +6,8 @@
   <title>釜山海洋之旅 | Busan Trip</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Vue 3 -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <!-- Phosphor Icons (極簡風圖示) -->
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <!-- SortableJS (拖曳排序) -->
@@ -35,6 +37,9 @@
     }
   </script>
   <style>
+    /* 隱藏未編譯的 Vue 模板，防止閃爍 */
+    [v-cloak] { display: none !important; }
+
     /* 隱藏捲軸但保持可滾動 */
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -65,11 +70,11 @@
 </head>
 <body class="bg-slate-100">
 
-<div id="app">
+<div id="app" v-cloak>
   <div id="app-container">
     
     <!-- Toast 提示 (複製成功) -->
-    <div v-if="toastMsg" class="fixed bottom-24 left-1/2 -translate-x-1/2 bg-slate-800 text-white px-4 py-2 rounded-full shadow-lg z-[100] text-sm font-medium transition-all duration-300 pointer-events-none">
+    <div v-if="toastMsg" class="fixed bottom-24 left-1/2 -translate-x-1/2 bg-slate-800 text-white px-4 py-2 rounded-full shadow-lg z-[100] text-sm font-medium transition-all duration-300 pointer-events-none whitespace-nowrap">
       {{ toastMsg }}
     </div>
 
@@ -111,7 +116,7 @@
           <i :class="weatherMock[selectedDateIdx].icon + ' text-4xl text-busan-500'"></i>
         </div>
 
-        <!-- 日期滑動選單 (App 橫向滑動風格) -->
+        <!-- 日期滑動選單 -->
         <div class="mt-4 px-2">
           <div class="flex overflow-x-auto no-scrollbar gap-2 px-2 pb-2">
             <button v-for="(day, index) in tripDays" :key="index"
@@ -124,9 +129,9 @@
           </div>
         </div>
 
-        <!-- 當日路線小圖與一鍵導航 (優化版提示) -->
+        <!-- 當日路線小圖與一鍵導航 -->
         <div class="mx-4 mt-2 mb-2 relative rounded-2xl overflow-hidden shadow-soft border border-slate-100 bg-white group" style="height: 130px;">
-          <!-- 路線背景圖 (支援使用者自行上傳 Naver 截圖) -->
+          <!-- 路線背景圖 -->
           <img v-if="routeImages[selectedDateIdx]" :src="routeImages[selectedDateIdx]" class="w-full h-full object-cover opacity-90">
           
           <!-- 尚未上傳時的提示畫面 -->
@@ -136,7 +141,7 @@
              <span class="text-[10px] mt-1">請點擊右上角相機上傳 Naver 截圖</span>
           </div>
           
-          <!-- 漸層遮罩讓文字更清楚 -->
+          <!-- 漸層遮罩 -->
           <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-slate-900/30 pointer-events-none"></div>
           
           <div class="absolute inset-0 p-3 flex flex-col justify-between">
@@ -680,6 +685,16 @@ const defaultItineraryData = {
   ]
 };
 
+// 安全解析 LocalStorage，避免因資料損毀導致整個 App 當機
+const getLocalData = (key, defaultVal) => {
+  try {
+    const val = localStorage.getItem(key);
+    return val ? JSON.parse(val) : defaultVal;
+  } catch (e) {
+    return defaultVal;
+  }
+};
+
 const app = createApp({
   setup() {
     // UI 狀態
@@ -689,13 +704,14 @@ const app = createApp({
     const modalMode = ref('add');
     const toastMsg = ref('');
     
-    // 資料狀態 (退回極速單機版，從 LocalStorage 載入，並防護讀取原本資料)
+    // 資料狀態 (退回極速單機版，從 LocalStorage 載入，並安全防護)
     const tripDays = ref(initialTripDays);
     const weatherMock = ref(mockWeather);
-    const itineraryData = ref(JSON.parse(localStorage.getItem('busan_itinerary_v14')) || JSON.parse(localStorage.getItem('busan_itinerary_v13')) || defaultItineraryData);
-    const shoppingList = ref(JSON.parse(localStorage.getItem('busan_shopping')) || []);
-    const expenses = ref(JSON.parse(localStorage.getItem('busan_expense')) || []);
-    const routeImages = ref(JSON.parse(localStorage.getItem('busan_route_images')) || {}); 
+    // 自動繼承舊版的備份資料，確保心血不會不見
+    const itineraryData = ref(getLocalData('busan_itinerary_v15', getLocalData('busan_itinerary_v14', defaultItineraryData)));
+    const shoppingList = ref(getLocalData('busan_shopping', []));
+    const expenses = ref(getLocalData('busan_expense', []));
+    const routeImages = ref(getLocalData('busan_route_images', {})); 
     
     // 匯率換算
     const krwInput = ref(10000);
@@ -710,12 +726,12 @@ const app = createApp({
     const formItinerary = ref({ id: '', category: 'spot', name: '', nameKr: '', addressKr: '', time: '', hours: '', ticket: '', note: '', transportType: 'walk', transportTime: '10m' });
     const formShopping = ref({ name: '', image: '' });
     const formExpense = ref({ id: '', category: '飲食', name: '', date: tripDays.value[0].dateFull, amount: '', payment: 'cash' });
-    
+
     let sortableInstance = null;
     const itineraryListRef = ref(null);
 
     // Watchers for LocalStorage (恢復單機即時極速儲存)
-    watch(itineraryData, (newVal) => { localStorage.setItem('busan_itinerary_v14', JSON.stringify(newVal)); }, { deep: true });
+    watch(itineraryData, (newVal) => { localStorage.setItem('busan_itinerary_v15', JSON.stringify(newVal)); }, { deep: true });
     watch(shoppingList, (newVal) => { localStorage.setItem('busan_shopping', JSON.stringify(newVal)); }, { deep: true });
     watch(expenses, (newVal) => { localStorage.setItem('busan_expense', JSON.stringify(newVal)); }, { deep: true });
     watch(routeImages, (newVal) => { localStorage.setItem('busan_route_images', JSON.stringify(newVal)); }, { deep: true });
@@ -838,7 +854,6 @@ const app = createApp({
       document.body.removeChild(link);
     };
 
-    // Actions
     const saveItinerary = () => {
       if (!formItinerary.value.name) return alert('請輸入名稱');
       const dayData = itineraryData.value[selectedDateIdx.value] || [];
@@ -1010,7 +1025,7 @@ const app = createApp({
       krwInput, twdOutput, formItinerary, formShopping, formExpense, itineraryListRef,
       getCategoryLabel, getTransportIcon, getExpenseCategoryIcon, getExpenseCategoryColor,
       openAddModal, editItinerary, closeModal, openMap, copyText, copyDailyRoute, openPointToPoint, handleRouteImageUpload,
-      saveItinerary, confirmDeleteItinerary, handleImageUpload, saveShopping, deleteShoppingItem, saveExpense, deleteExpense, exportToExcel
+      handleImageUpload, saveShopping, deleteShoppingItem, saveExpense, deleteExpense, exportToExcel, saveItinerary, confirmDeleteItinerary
     };
   }
 });
