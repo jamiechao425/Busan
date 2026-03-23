@@ -68,13 +68,6 @@
 <div id="app">
   <div id="app-container">
     
-    <!-- 雲端同步載入畫面 -->
-    <div v-if="!isReady" class="absolute inset-0 bg-white/90 z-[999] flex flex-col items-center justify-center backdrop-blur-sm">
-      <i class="ph ph-spinner-gap animate-spin text-5xl text-busan-600 mb-3"></i>
-      <span class="text-sm font-bold text-slate-700 tracking-widest">雲端同步中...</span>
-      <span class="text-[10px] text-slate-400 mt-1">正在為您與旅伴同步最新行程資料</span>
-    </div>
-
     <!-- Toast 提示 (複製成功) -->
     <div v-if="toastMsg" class="fixed bottom-24 left-1/2 -translate-x-1/2 bg-slate-800 text-white px-4 py-2 rounded-full shadow-lg z-[100] text-sm font-medium transition-all duration-300 pointer-events-none">
       {{ toastMsg }}
@@ -594,11 +587,8 @@
   </div>
 </div>
 
-<script type="module">
-import { createApp, ref, computed, onMounted, watch, nextTick } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js';
-import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js';
-import { getFirestore, doc, setDoc, onSnapshot, collection } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js';
+<script>
+const { createApp, ref, computed, onMounted, watch, nextTick } = Vue;
 
 // 初始化釜山 8 天資料
 const initialTripDays = [
@@ -690,13 +680,6 @@ const defaultItineraryData = {
   ]
 };
 
-// 雲端資料庫初始化 (Firebase)
-const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-const firebaseApp = initializeApp(firebaseConfig);
-const auth = getAuth(firebaseApp);
-const db = getFirestore(firebaseApp);
-const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-busan-trip-id';
-
 const app = createApp({
   setup() {
     // UI 狀態
@@ -705,16 +688,14 @@ const app = createApp({
     const activeModal = ref(null);
     const modalMode = ref('add');
     const toastMsg = ref('');
-    const isReady = ref(false); // 雲端同步狀態
-    const user = ref(null);
     
-    // 資料狀態 (從雲端載入)
+    // 資料狀態 (退回極速單機版，從 LocalStorage 載入，並防護讀取原本資料)
     const tripDays = ref(initialTripDays);
     const weatherMock = ref(mockWeather);
-    const itineraryData = ref({});
-    const shoppingList = ref([]);
-    const expenses = ref([]);
-    const routeImages = ref({}); 
+    const itineraryData = ref(JSON.parse(localStorage.getItem('busan_itinerary_v14')) || JSON.parse(localStorage.getItem('busan_itinerary_v13')) || defaultItineraryData);
+    const shoppingList = ref(JSON.parse(localStorage.getItem('busan_shopping')) || []);
+    const expenses = ref(JSON.parse(localStorage.getItem('busan_expense')) || []);
+    const routeImages = ref(JSON.parse(localStorage.getItem('busan_route_images')) || {}); 
     
     // 匯率換算
     const krwInput = ref(10000);
@@ -733,76 +714,19 @@ const app = createApp({
     let sortableInstance = null;
     const itineraryListRef = ref(null);
 
-    // ==================== 雲端同步功能 ====================
-    // 自動寫入雲端
-    const syncItinerary = () => {
-      if (!user.value) return;
-      setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'busanApp', 'itinerary'), { data: itineraryData.value }).catch(console.error);
-    };
-    const syncShopping = () => {
-      if (!user.value) return;
-      setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'busanApp', 'shopping'), { data: shoppingList.value }).catch(console.error);
-    };
-    const syncExpenses = () => {
-      if (!user.value) return;
-      setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'busanApp', 'expenses'), { data: expenses.value }).catch(console.error);
-    };
-    const syncRouteImages = () => {
-      if (!user.value) return;
-      setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'busanApp', 'routeImages'), { data: routeImages.value }).catch(console.error);
-    };
-
-    // 設定雲端監聽器 (當其他旅伴修改時自動更新畫面)
-    const setupFirestoreListeners = () => {
-      if (!user.value) return;
-      const baseCol = collection(db, 'artifacts', appId, 'public', 'data', 'busanApp');
-
-      onSnapshot(doc(baseCol, 'itinerary'), (snapshot) => {
-        if (snapshot.exists()) {
-          itineraryData.value = snapshot.data().data;
-        } else {
-          itineraryData.value = defaultItineraryData;
-          syncItinerary(); // 初次建立預設行程
-        }
-        isReady.value = true; // 畫面載入完成
-      }, (err) => console.error(err));
-
-      onSnapshot(doc(baseCol, 'shopping'), (snapshot) => {
-        if (snapshot.exists()) shoppingList.value = snapshot.data().data;
-      }, (err) => console.error(err));
-
-      onSnapshot(doc(baseCol, 'expenses'), (snapshot) => {
-        if (snapshot.exists()) expenses.value = snapshot.data().data;
-      }, (err) => console.error(err));
-
-      onSnapshot(doc(baseCol, 'routeImages'), (snapshot) => {
-        if (snapshot.exists()) routeImages.value = snapshot.data().data;
-      }, (err) => console.error(err));
-    };
-
-    const initAuth = async () => {
-      if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-        await signInWithCustomToken(auth, __initial_auth_token).catch(console.error);
-      } else {
-        await signInAnonymously(auth).catch(console.error);
-      }
-    };
+    // Watchers for LocalStorage (恢復單機即時極速儲存)
+    watch(itineraryData, (newVal) => { localStorage.setItem('busan_itinerary_v14', JSON.stringify(newVal)); }, { deep: true });
+    watch(shoppingList, (newVal) => { localStorage.setItem('busan_shopping', JSON.stringify(newVal)); }, { deep: true });
+    watch(expenses, (newVal) => { localStorage.setItem('busan_expense', JSON.stringify(newVal)); }, { deep: true });
+    watch(routeImages, (newVal) => { localStorage.setItem('busan_route_images', JSON.stringify(newVal)); }, { deep: true });
 
     onMounted(() => {
-      initAuth();
-      onAuthStateChanged(auth, (currentUser) => {
-        user.value = currentUser;
-        if (currentUser) {
-          setupFirestoreListeners();
-        }
-      });
       initSortable();
       // 確保陣列結構存在
       for(let i=0; i<8; i++) {
         if(!itineraryData.value[i]) itineraryData.value[i] = [];
       }
     });
-    // ======================================================
 
     watch([currentTab, selectedDateIdx], async () => {
       await nextTick();
@@ -812,7 +736,7 @@ const app = createApp({
     const initSortable = () => {
       if (sortableInstance) sortableInstance.destroy();
       if (itineraryListRef.value && currentTab.value === 'itinerary') {
-        sortableInstance = new window.Sortable(itineraryListRef.value, {
+        sortableInstance = new Sortable(itineraryListRef.value, {
           handle: '.drag-handle',
           animation: 150,
           ghostClass: 'sortable-ghost',
@@ -821,7 +745,6 @@ const app = createApp({
             const [removed] = list.splice(evt.oldIndex, 1);
             list.splice(evt.newIndex, 0, removed);
             itineraryData.value[selectedDateIdx.value] = list;
-            syncItinerary(); // 拖曳結束後自動同步雲端
           }
         });
       }
@@ -915,7 +838,7 @@ const app = createApp({
       document.body.removeChild(link);
     };
 
-    // Actions (with Cloud Sync)
+    // Actions
     const saveItinerary = () => {
       if (!formItinerary.value.name) return alert('請輸入名稱');
       const dayData = itineraryData.value[selectedDateIdx.value] || [];
@@ -927,14 +850,12 @@ const app = createApp({
         if (idx !== -1) dayData[idx] = { ...formItinerary.value };
       }
       itineraryData.value[selectedDateIdx.value] = dayData;
-      syncItinerary();
       closeModal();
     };
 
     const confirmDeleteItinerary = () => {
       if(confirm('確定要刪除這個行程嗎？')) {
          itineraryData.value[selectedDateIdx.value] = itineraryData.value[selectedDateIdx.value].filter(i => i.id !== formItinerary.value.id);
-         syncItinerary();
          closeModal();
       }
     };
@@ -987,7 +908,6 @@ const app = createApp({
           ctx.drawImage(img, 0, 0, width, height);
 
           routeImages.value[dayIdx] = canvas.toDataURL('image/jpeg', 0.6);
-          syncRouteImages(); // 同步至雲端
         };
         img.src = event.target.result; 
       };
@@ -1027,26 +947,22 @@ const app = createApp({
     const saveShopping = () => {
       if (!formShopping.value.name) return alert('請輸入商品名稱');
       shoppingList.value.unshift({ ...formShopping.value });
-      syncShopping(); // 同步至雲端
       closeModal();
     };
     const deleteShoppingItem = (idx) => {
       if(confirm('確定刪除此商品？')) {
         shoppingList.value.splice(idx, 1);
-        syncShopping();
       }
     };
 
     const saveExpense = () => {
       if (!formExpense.value.name || !formExpense.value.amount) return alert('請輸入名稱與金額');
       expenses.value.push({ ...formExpense.value });
-      syncExpenses(); // 同步至雲端
       closeModal();
     };
     const deleteExpense = (id) => {
       if(confirm('確定刪除此筆花費？')) {
         expenses.value = expenses.value.filter(e => e.id !== id);
-        syncExpenses();
       }
     };
 
@@ -1089,7 +1005,7 @@ const app = createApp({
     };
 
     return {
-      isReady, currentTab, selectedDateIdx, activeModal, modalMode, toastMsg,
+      currentTab, selectedDateIdx, activeModal, modalMode, toastMsg,
       tripDays, weatherMock, currentItinerary, shoppingList, expenses, totalExpense, sortedExpenses, routeImages,
       krwInput, twdOutput, formItinerary, formShopping, formExpense, itineraryListRef,
       getCategoryLabel, getTransportIcon, getExpenseCategoryIcon, getExpenseCategoryColor,
