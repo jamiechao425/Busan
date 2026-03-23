@@ -623,45 +623,47 @@ const defaultItineraryData = {
   0: [
     { id: '1-1', type: 'flight', category: 'flight', name: 'TPE - PUS 航班 BX794', time: '02:50 - 06:05', flightTime: '2h15m', transportType: 'transit', transportTime: '60m' },
     { id: '1-2', type: 'normal', category: 'other', name: '抵達釜山前往市區', nameKr: '김해국제공항', addressKr: '부산 강서구 공항진입로 108', time: '06:05', note: '入境、領行李，儲值交通卡搭輕軌轉地鐵至 Centum City', transportType: 'transit', transportTime: '60m' },
-    { id: '1-3', type: 'normal', category: 'spot', name: 'Spa Land 汗蒸幕', nameKr: '스파랜드 센텀시티', addressKr: '부산 해운대구 센텀남대로 35', time: '09:00', hours: '09:00 - 22:00', ticket: '適用 BIG 5 (A區)', note: '紅眼班機首選！在豪華休息區深度補眠、泡湯回血。', transportType: 'transit', transportTime: '30m' },
-    { id: '1-4', type: 'normal', category: 'hotel', name: '日落酒店 (寄放行李)', nameKr: '선셋 비즈니스 호텔', addressKr: '부산 해운대구 구남로 46', time: '13:30', note: '抵達海雲台寄放行李', transportType: 'walk', transportTime: '8m' },
-    { id: '1-5', type: 'normal', category: 'food', name: '明聲一隻雞', nameKr: '명성닭한마리', addressKr: '부산 해운대구 구남로12번길 11', time: '14:30', hours: '11:30 - 22:30', note: '【餐點推薦】必點：一隻雞＋年糕＋最後煮刀切麵。清甜湯頭能緩解熬夜火氣。', transportType: 'walk', transportTime: '5m' },
+    { id: '1-3', type: 'normal', category: 'spot', name: 'Spa Land 汗蒸幕', nameKr: '스파랜드 센텀시티', addressKr: '부산 해운대구 센텀남대로 35', time: '09:00', hours: '09:00 - 22:00', ticket: '適用 BIG 5 (A區)', note: '紅眼班機首選！在豪華休息區深度補眠、泡湯回血。', transportType: 'walk', transportTime: '5m' },
+    { id: '1-new', type: 'normal', category: 'shop', name: '新世界百貨 B2 (潮牌地下街)', nameKr: '신세계백화점 센텀시티점', addressKr: '부산 해운대구 센텀남대로 35', time: '11:30', hours: '10:30 - 20:00', note: '【必逛潮牌】B2 的 Hyper Ground 是韓國潮牌大本營，泡完汗蒸幕可以直接走出來逛逛 Mardi Mercredi 等熱門品牌！', transportType: 'transit', transportTime: '25m' },
+    { id: '1-4', type: 'normal', category: 'hotel', name: '日落酒店 (寄放行李)', nameKr: '선셋 비즈니스 호텔', addressKr: '부산 해운대구 구남로 46', time: '13:30', note: '帶著戰利品抵達海雲台寄放行李', transportType: 'walk', transportTime: '8m' },
+    { id: '1-5', type: 'normal', category: 'food', name: '海雲台31cm海鮮刀削麵', nameKr: '해운대 31cm해물칼국수 본점', addressKr: '부산 해운대구 구남로41번길 46', time: '14:30', hours: '11:00 - 22:00', note: '【餐點推薦】招牌31公分海鮮刀削麵。滿滿鮮甜貝類與熱湯，紅眼班機後吃超暖胃！', transportType: 'walk', transportTime: '5m' },
     { id: '1-6', type: 'normal', category: 'hotel', name: '飯店休息 / 海邊散步', nameKr: '해운대해수욕장', addressKr: '부산 해운대구 우동', time: '16:00', note: '回飯店正式 Check-in 睡午覺，或到海水浴場餵海鷗。', transportType: 'walk', transportTime: '15m' },
     { id: '1-7', type: 'normal', category: 'food', name: '海雲台名家烤盲鰻', nameKr: '해운대 이름난 기장산곰장어', addressKr: '부산 해운대구 구남로41번길 28', time: '18:30', hours: '11:00 - 00:00', note: '【餐點推薦】鹽烤與調味盲鰻，體驗焦香Q彈，吃完一定要加點海苔炒飯。', transportType: 'walk', transportTime: '10m' },
     { id: '1-8', type: 'normal', category: 'food', name: '名品糖餅', nameKr: '해운대 명품호떡', addressKr: '부산 해운대구 중동1로 38', time: '20:30', hours: '12:00 - 22:00', note: '【餐點推薦】起司口味與堅果黑糖口味。買完糖餅漫步回飯店。' }
   ],
   1: [
-    { id: '2-0', type: 'normal', category: 'food', name: '舒暢鱈魚湯', nameKr: '속씨원한대구탕', addressKr: '부산 해운대구 달맞이길62번길 28', time: '09:00', hours: '08:00 - 21:00', note: '【餐點推薦】清湯鱈魚湯、雞蛋捲。湯頭鮮甜，海雲台必吃人氣早餐。', transportType: 'walk', transportTime: '10m' },
-    { id: '2-1', type: 'normal', category: 'spot', name: '尾浦 膠囊火車 (自費)', nameKr: '해운대블루라인파크 미포정거장', addressKr: '부산 해운대구 달맞이길62번길 13', time: '10:30', hours: '09:30 - 18:30', ticket: '自費', note: '搭到青沙浦（高空看海，預約此方向光線最美）', transportType: 'walk', transportTime: '5m' },
-    { id: '2-2', type: 'normal', category: 'spot', name: '青沙浦拍照 / 天空步道', nameKr: '청사포 다릿돌전망대', addressKr: '부산 해운대구 중동 산3-9', time: '11:00', hours: '09:00 - 18:00', note: '平交道拍「台版灌籃高手」海景、走踏石觀景臺透明步道', transportType: 'walk', transportTime: '10m' },
-    { id: '2-3', type: 'normal', category: 'food', name: '青沙浦海景烤貝', nameKr: '수민이네', addressKr: '부산 해운대구 청사포로58번길 118', time: '12:30', hours: '11:30 - 05:00', note: '【餐點推薦】綜合烤貝(附起司)、海鮮拉麵。在岸邊吹海風吃炭火烤貝。', transportType: 'transit', transportTime: '20m' },
-    { id: '2-4', type: 'normal', category: 'food', name: 'Cafe Diart (手沖咖啡)', nameKr: '카페 디아트', addressKr: '부산 해운대구 청사포로128번길 12', time: '14:30', hours: '10:30 - 21:00', note: '【餐點推薦】招牌手沖咖啡、凱馬克 (Kaymak) 鮮奶油吐司。吃完海鮮烤貝剛好散步來喝下午茶看海！', transportType: 'walk', transportTime: '5m' },
-    { id: '2-5', type: 'normal', category: 'spot', name: '海岸列車與松亭熱狗', nameKr: '송정동핫도그', addressKr: '부산 해운대구 송정해변로 18', time: '15:30', hours: '09:30 - 23:00 (熱狗)', ticket: '建議現場購票 (原12,000)', note: '【餐點推薦】莫札瑞拉起司熱狗。搭海岸列車抵達後看衝浪者發呆。', transportType: 'transit', transportTime: '30m' },
-    { id: '2-6', type: 'normal', category: 'food', name: '味贊王鹽烤肉 (海雲台店)', nameKr: '맛찬들왕소금구이 해운대점', addressKr: '부산 해운대구 해운대로608번길 46', time: '18:30', hours: '11:30 - 23:00', note: '【餐點推薦】3.5cm厚切五花肉、豬脖子肉，強烈建議加點蝦醬石鍋拌飯。', transportType: 'walk', transportTime: '15m' },
-    { id: '2-7', type: 'normal', category: 'other', name: '海雲台主街逛街', nameKr: '구남로', addressKr: '부산 해운대구 구남로', time: '20:30', note: 'Gunam-ro 逛街，或找間咖啡廳看夜景' }
+    { id: '2-1', type: 'normal', category: 'food', name: '舒暢鱈魚湯', nameKr: '속씨원한대구탕', addressKr: '부산 해운대구 달맞이길62번길 28', time: '09:00', hours: '08:00 - 21:00', note: '【餐點推薦】清湯鱈魚湯、雞蛋捲。湯頭鮮甜，海雲台必吃人氣早餐。', transportType: 'walk', transportTime: '10m' },
+    { id: '2-2', type: 'normal', category: 'spot', name: '尾浦車站 (膠囊/海岸列車)', nameKr: '해운대블루라인파크 미포정거장', addressKr: '부산 해운대구 달맞이길62번길 13', time: '10:30', hours: '09:30 - 18:30', ticket: '適用 BIG 5 (B區)', note: '佛系玩法：可現場詢問膠囊火車餘票，若無則直接使用 BIG 5 搭乘「海岸列車」前往青沙浦，海景一樣美！', transportType: 'walk', transportTime: '5m' },
+    { id: '2-3', type: 'normal', category: 'spot', name: '青沙浦拍照 / 天空步道', nameKr: '청사포 다릿돌전망대', addressKr: '부산 해운대구 중동 산3-9', time: '11:00', hours: '09:00 - 18:00', note: '平交道拍「台版灌籃高手」海景、走踏石觀景臺透明步道', transportType: 'walk', transportTime: '10m' },
+    { id: '2-4', type: 'normal', category: 'food', name: '青沙浦海景烤貝', nameKr: '수민이네', addressKr: '부산 해운대구 청사포로58번길 118', time: '12:30', hours: '11:30 - 05:00', note: '【餐點推薦】綜合烤貝(附起司)、海鮮拉麵。在岸邊吹海風吃炭火烤貝。', transportType: 'walk', transportTime: '10m' },
+    { id: '2-5', type: 'normal', category: 'food', name: 'Cafe Diart (手沖咖啡)', nameKr: '카페 디아트', addressKr: '부산 해운대구 청사포로128번길 12', time: '14:30', hours: '10:30 - 21:00', note: '【餐點推薦】招牌手沖咖啡、凱馬克 (Kaymak) 鮮奶油吐司。吃完海鮮烤貝剛好散步來喝下午茶看海！', transportType: 'walk', transportTime: '5m' },
+    { id: '2-6', type: 'normal', category: 'spot', name: '海岸列車與松亭熱狗', nameKr: '송정동핫도그', addressKr: '부산 해운대구 송정해변로 18', time: '15:30', hours: '09:30 - 23:00 (熱狗)', note: '【餐點推薦】莫札瑞拉起司熱狗。再次搭乘海岸列車抵達松亭，看衝浪者發呆。', transportType: 'transit', transportTime: '30m' },
+    { id: '2-7', type: 'normal', category: 'food', name: '味贊王鹽烤肉 (海雲台店)', nameKr: '맛찬들왕소금구이 해운대점', addressKr: '부산 해운대구 해운대로608번길 46', time: '18:30', hours: '11:30 - 23:00', note: '【餐點推薦】3.5cm厚切五花肉、豬脖子肉，強烈建議加點蝦醬石鍋拌飯。', transportType: 'transit', transportTime: '30m' },
+    { id: '2-8', type: 'normal', category: 'other', name: '海雲台主街逛街', nameKr: '구남로', addressKr: '부산 해운대구 구남로', time: '20:30', note: 'Gunam-ro 逛街，消化一下肚子裡的烤肉' }
   ],
   2: [
     { id: '3-1', type: 'normal', category: 'spot', name: '海東龍宮寺', nameKr: '해동용궁사', addressKr: '부산 기장군 기장읍 용궁길 86', time: '09:30', hours: '04:30 - 19:20', note: '韓國唯一建在海邊的絕美寺廟。逛完後往下走或搭短程計程車去滑車。', transportType: 'car', transportTime: '30m' },
     { id: '3-2', type: 'normal', category: 'spot', name: 'Skyline Luge 斜坡滑車', nameKr: '스카이라인루지 부산', addressKr: '부산 기장군 기장읍 기장해안로 237', time: '11:00', hours: '10:00 - 19:00 (週末至20:00)', ticket: '適用 BIG 5 (A區)', note: '享受連續彎道的飆速快感（建議玩 3 次才過癮）', transportType: 'walk', transportTime: '15m' },
     { id: '3-3', type: 'normal', category: 'food', name: '機張市場 (海鮮午餐)', nameKr: '기장시장', addressKr: '부산 기장군 기장읍 읍내로104번길 16', time: '13:00', hours: '06:00 - 21:00', note: '【餐點推薦】必吃機張長腳蟹(松葉蟹)或新鮮海產，挑選後由阿珠媽代客料理，價格實惠。', transportType: 'car', transportTime: '15m' },
     { id: '3-4', type: 'normal', category: 'shop', name: '樂天 Outlet 東釜山店', nameKr: '롯데프리미엄아울렛 동부산점', addressKr: '부산 기장군 기장읍 기장해안로 147', time: '15:00', hours: '10:30 - 21:00', note: '吃飽後搭車回 Outlet 瘋狂採購，運動及韓牌非常齊全', transportType: 'car', transportTime: '15m' },
-    { id: '3-5', type: 'normal', category: 'hotel', name: '返回海雲台', nameKr: '선셋 비즈니스 호텔', addressKr: '부산 해운대구 구남로 46', time: '18:00', note: '帶著戰利品搭車回飯店放行李，準備前往廣安里吃晚餐。', transportType: 'car', transportTime: '25m' },
-    { id: '3-6', type: 'normal', category: 'food', name: 'Nasari 食堂 廣安店', nameKr: '나사리식당 광안점', addressKr: '부산 수영구 광안로61번길 60 3층', time: '19:30', hours: '11:00 - 22:00 (午休 15:30-17:00)', note: '【餐點推薦】海鮮大王刀削麵、忠武蛤蜊飯捲、海鮮韭菜煎餅。不吃牛的首選！窗邊還能飽覽廣安大橋無敵夜景。（從海雲台搭車前往約15-20分）', transportType: 'transit', transportTime: '20m' },
-    { id: '3-7', type: 'normal', category: 'food', name: '60炸雞店 (海雲台店)', nameKr: '60계치킨 해운대점', addressKr: '부산 해운대구 구남로 11-1', time: '21:30', hours: '15:00 - 00:00', note: '【餐點推薦】招牌高粱辣椒炸雞(Gochu Chicken)，回到海雲台吃宵夜配啤酒完美收尾。', transportType: 'transit', transportTime: '20m' }
+    { id: '3-5', type: 'normal', category: 'hotel', name: '返回海雲台', nameKr: '선셋 비즈니스 호텔', addressKr: '부산 해운대구 구남로 46', time: '18:00', note: '帶著戰利品搭車回飯店放行李，準備前往廣安里。', transportType: 'car', transportTime: '25m' },
+    { id: '3-6', type: 'normal', category: 'food', name: 'ALL SUNDAY (廣安店)', nameKr: '올선데이 광안점', addressKr: '부산 수영구 광안해변로 193 1층', time: '19:00', hours: '11:00 - 21:30', note: '【餐點推薦】青蔥奶油芝士貝果。廣安里超人氣貝果店，買隔天早餐或當點心，還能看廣安大橋！', transportType: 'transit', transportTime: '25m' },
+    { id: '3-7', type: 'normal', category: 'food', name: 'Nasari 食堂 廣安店', nameKr: '나사리식당 광안점', addressKr: '부산 수영구 광안로61번길 60 3층', time: '19:30', hours: '11:00 - 22:00 (午休 15:30-17:00)', note: '【餐點推薦】海鮮大王刀削麵、忠武蛤蜊飯捲、海鮮韭菜煎餅。買完貝果走過來吃晚餐，窗邊還能飽覽夜景。', transportType: 'walk', transportTime: '5m' },
+    { id: '3-8', type: 'normal', category: 'food', name: '60炸雞店 (海雲台店)', nameKr: '60계치킨 해운대점', addressKr: '부산 해운대구 구남로 11-1', time: '21:30', hours: '15:00 - 00:00', note: '【餐點推薦】招牌高粱辣椒炸雞(Gochu Chicken)，回到海雲台吃宵夜配啤酒完美收尾。', transportType: 'transit', transportTime: '20m' }
   ],
   3: [
     { id: '4-1', type: 'normal', category: 'hotel', name: '退房轉往西面城市旅店', nameKr: '서면 씨티호텔', addressKr: '부산 부산진구 서면로 56', time: '10:00', note: '更換飯店，先行寄放行李', transportType: 'transit', transportTime: '40m' },
-    { id: '4-2', type: 'normal', category: 'food', name: '李在模 PIZZA (西面店)', nameKr: '이재모피자 서면점', addressKr: '부산 부산진구 전포대로209번길 21', time: '12:00', hours: '10:00 - 21:10 (每週日公休)', note: '【餐點推薦】招牌起司披薩(Cheese Crust Pizza)。原排定的山莊1988傍晚才開，故與Day7晚餐互換！', transportType: 'walk', transportTime: '10m' },
-    { id: '4-3', type: 'normal', category: 'spot', name: 'Arte Museum 釜山', nameKr: '아르떼뮤지엄 부산', addressKr: '부산 영도구 해양로247번길 29', time: '14:00', hours: '10:00 - 21:00', ticket: '適用 BIG 5 (B區)', note: '影島區震撼的光影藝術', transportType: 'transit', transportTime: '30m' },
+    { id: '4-2', type: 'normal', category: 'food', name: '李在模 PIZZA (西面店)', nameKr: '이재모피자 서면점', addressKr: '부산 부산진구 전포대로209번길 21', time: '12:00', hours: '10:00 - 21:10 (每週日公休)', note: '【餐點推薦】招牌起司披薩(Cheese Crust Pizza)。吃飽後準備前往影島！', transportType: 'walk', transportTime: '10m' },
+    { id: '4-3', type: 'normal', category: 'spot', name: 'Arte Museum 釜山', nameKr: '아르떼뮤지엄 부산', addressKr: '부산 영도구 해양로247번길 29', time: '14:00', hours: '10:00 - 21:00', ticket: '適用 BIG 5 (B區)', note: '影島區震撼的光影藝術。', transportType: 'transit', transportTime: '30m' },
     { id: '4-4', type: 'normal', category: 'spot', name: '白淺灘文化村', nameKr: '흰여울문화마을', addressKr: '부산 영도구 영선동4가 605-3', time: '16:30', hours: '全天開放 (店家約 10:00 - 18:00)', note: '海邊散步、看夕陽', transportType: 'transit', transportTime: '20m' },
-    { id: '4-5', type: 'normal', category: 'food', name: '83烤肉 (西面店)', nameKr: '83해치 서면점', addressKr: '부산 부산진구 서전로10번길 22-5', time: '19:00', hours: '15:30 - 01:00', note: '【餐點推薦】豬脖子肉(松阪豬)與五花肉。服務氣氛極佳，小菜豐盛。', transportType: 'transit', transportTime: '30m' }
+    { id: '4-5', type: 'normal', category: 'food', name: '明聲一隻雞 (影島)', nameKr: '명성닭한마리', addressKr: '부산 영도구 절영로 22 1층', time: '18:30', hours: '11:00 - 23:00 (每月第1/3週一公休)', note: '【餐點推薦】一隻雞＋年糕＋最後煮刀切麵。在影島看完夕陽順路吃，超順暢！吃完搭車回西面。', transportType: 'transit', transportTime: '15m' }
   ],
   4: [
-    { id: '5-1', type: 'normal', category: 'spot', name: '松島海上纜車 (水晶車廂)', nameKr: '송도해상케이블카', addressKr: '부산 서구 송도해변로 171', time: '09:30', hours: '09:00 - 20:00', ticket: '自費', note: '橫跨大海的高空美景 (BIG 5 A區額度已滿，此項需自費)', transportType: 'transit', transportTime: '40m' },
-    { id: '5-2', type: 'normal', category: 'spot', name: '松島龍宮雲橋', nameKr: '송도용궁구름다리', addressKr: '부산 서구 암남동 산193', time: '11:00', hours: '09:00 - 18:00 (每月第1/3個週一公休)', ticket: '適用 BIG 5 (B區)', note: '走完纜車後順遊', transportType: 'walk', transportTime: '10m' },
+    { id: '5-1', type: 'normal', category: 'spot', name: '松島海上纜車 (水晶車廂)', nameKr: '송도해상케이블카', addressKr: '부산 서구 송도해변로 171', time: '09:30', hours: '09:00 - 20:00', ticket: '適用 BIG 5 (B區)', note: '橫跨大海的高空美景，建議搭乘透明水晶車廂。', transportType: 'transit', transportTime: '40m' },
+    { id: '5-2', type: 'normal', category: 'spot', name: '松島龍宮雲橋', nameKr: '송도용궁구름다리', addressKr: '부산 서구 암남동 산193', time: '11:00', hours: '09:00 - 18:00 (每月第1/3個週一公休)', ticket: '現場付 1,000 KRW', note: '走完纜車後順遊的海上步道，門票便宜建議直接付現。', transportType: 'walk', transportTime: '10m' },
     { id: '5-3', type: 'normal', category: 'spot', name: '甘川洞文化村', nameKr: '감천문화마을', addressKr: '부산 사하구 감내2로 203', time: '13:30', hours: '09:00 - 18:00', note: '尋找小王子、漫步彩色巷弄', transportType: 'transit', transportTime: '30m' },
-    { id: '5-4', type: 'normal', category: 'shop', name: '南浦洞商圈 (光復路)', nameKr: '광복로패션거리', addressKr: '부산 중구 광복동', time: '15:30', hours: '約 11:00 - 22:00', note: '逛街購物', transportType: 'transit', transportTime: '20m' },
-    { id: '5-5', type: 'normal', category: 'spot', name: '釜山鑽石塔 (Busan Tower)', nameKr: '부산타워', addressKr: '부산 중구 용두산길 37-55', time: '16:30', hours: '10:00 - 22:00', ticket: '適用 BIG 5 (B區)', note: '南浦洞逛街後上去看夕陽與釜山港夜景。剛好用掉最後一個 B 區額度！', transportType: 'walk', transportTime: '10m' },
+    { id: '5-4', type: 'normal', category: 'shop', name: '南浦洞商圈 (買 EPT 👟)', nameKr: '광복로패션거리', addressKr: '부산 중구 광복동', time: '15:30', hours: '約 11:00 - 22:00', note: '【必逛 EPT 實體店】在這裡買超紅的 EPT 胖胖鞋！光復路商圈也是美妝與服飾的購物天堂。', transportType: 'transit', transportTime: '20m' },
+    { id: '5-5', type: 'normal', category: 'spot', name: '釜山鑽石塔 (Busan Tower)', nameKr: '부산타워', addressKr: '부산 중구 용두산길 37-55', time: '16:30', hours: '10:00 - 22:00', ticket: '自費 (原12,000)', note: '南浦洞逛街後上去看夕陽與釜山港夜景。', transportType: 'walk', transportTime: '10m' },
     { id: '5-6', type: 'normal', category: 'food', name: 'BIFF廣場 & 富平罐頭市場', nameKr: '비프광장 & 부평깡통시장', addressKr: '부산 중구 부평동2가 16', time: '18:00', hours: '夜市 19:30 - 23:30 (日間正常營業)', note: '【餐點推薦】堅果黑糖餅(BIFF)、伊家辣炒年糕(罐頭市場)。兩者僅隔一條街，從鑽石塔下來剛好順遊吃小吃！', transportType: 'walk', transportTime: '10m' },
     { id: '5-7', type: 'normal', category: 'food', name: '新東亞市場海鮮85號', nameKr: '신동아수산물종합시장', addressKr: '부산 중구 자갈치해안로 33', time: '19:00', hours: '09:00 - 21:00 (每月第1/3個週二公休)', note: '【餐點推薦】在一樓挑選生魚片或長腳蟹，體驗阿珠媽現殺地道海鮮。', transportType: 'walk', transportTime: '10m' },
     { id: '5-8', type: 'normal', category: 'food', name: '釜山烤肋排 (宵夜外帶)', nameKr: '부산쪽쪽갈비', addressKr: '부산 부산진구 중앙대로691번가길 32', time: '21:00', hours: '16:30 - 01:00', note: '【餐點推薦】鹽味/調味烤肋排半半。外帶回西面飯店當宵夜。', transportType: 'transit', transportTime: '20m' }
@@ -669,19 +671,23 @@ const defaultItineraryData = {
   5: [
     { id: '6-1', type: 'normal', category: 'shop', name: '釜田市場', nameKr: '부전시장', addressKr: '부산 부산진구 중앙대로783번길 23', time: '09:00', hours: '06:00 - 19:00', note: '早起買新鮮草莓 (距離西面站很近)', transportType: 'walk', transportTime: '10m' },
     { id: '6-2', type: 'normal', category: 'food', name: '松亭3代豬肉湯飯 (西面)', nameKr: '송정3대국밥', addressKr: '부산 부산진구 서면로68번길 33', time: '10:30', hours: '24小時營業', note: '【餐點推薦】招牌豬肉湯飯、血腸。既然住西面，早上直接來西面著名的湯飯街最順路！', transportType: 'walk', transportTime: '10m' },
-    { id: '6-3', type: 'normal', category: 'spot', name: '田浦咖啡街散步', nameKr: '전포카페거리', addressKr: '부산 부산진구 전포대로 92-1', time: '13:30', hours: '多數店家 11:00 - 22:00', note: '感受文青氣息', transportType: 'walk', transportTime: '15m' },
-    { id: '6-4', type: 'normal', category: 'food', name: 'ALL SUNDAY', nameKr: '올선데이', addressKr: '부산 부산진구 전포대로 209', time: '15:00', hours: '11:00 - 21:30', note: '【餐點推薦】青蔥奶油芝士貝果、無花果貝果與拿鐵。', transportType: 'walk', transportTime: '5m' },
+    { id: '6-3', type: 'normal', category: 'spot', name: '田浦咖啡街散步', nameKr: '전포카페거리', addressKr: '부산 부산진구 전포대로 92-1', time: '13:30', hours: '多數店家 11:00 - 22:00', note: '感受文青氣息，這裡有非常多特色選物店與服飾店可以逛。', transportType: 'walk', transportTime: '15m' },
+    { id: '6-4', type: 'normal', category: 'food', name: '田浦特色咖啡廳 (下午茶)', nameKr: '전포동 카페', addressKr: '부산 부산진구 전포동', time: '15:00', hours: '依店家而定', note: '【推薦】可隨意挑選一間順眼的文青咖啡廳休息吃甜點，享受西面午後時光。', transportType: 'walk', transportTime: '5m' },
     { id: '6-5', type: 'normal', category: 'shop', name: '樂天百貨購物', nameKr: '롯데백화점 부산본점', addressKr: '부산 부산진구 가야대로 772', time: '17:00', hours: '10:30 - 20:00 (五六日至20:30)', note: '西面商圈血拼', transportType: 'walk', transportTime: '10m' },
-    { id: '6-6', type: 'normal', category: 'food', name: '部隊鍋 / 西面烤腸街', nameKr: '서면 곱창골목', addressKr: '부산 부산진구 부전동 168-15', time: '19:00', hours: '約 16:00 - 02:00', note: '【餐點推薦】西面烤腸街的半半烤腸(鹽烤/調味)配燒酒。', transportType: 'walk', transportTime: '10m' }
+    { id: '6-6', type: 'normal', category: 'food', name: '83烤肉 (西面店)', nameKr: '83해치 서면점', addressKr: '부산 부산진구 서전로10번길 22-5', time: '19:00', hours: '15:30 - 01:00', note: '【餐點推薦】豬脖子肉(松阪豬)與五花肉。店員超熱情會幫忙烤肉拍照，西面必吃神級烤肉！', transportType: 'walk', transportTime: '10m' }
   ],
   6: [
-    { id: '7-1', type: 'normal', category: 'shop', name: '最後大採購', nameKr: '롯데마트 / 홈플러스', addressKr: '서면 인근 마트', time: '10:30', hours: '大型超市通常 10:00 - 23:00 (注意每月第2/4週日公休)', note: '釜山大學商圈 或 樂天超市/Homeplus 進行最後補貨', transportType: 'transit', transportTime: '20m' },
-    { id: '7-2', type: 'normal', category: 'food', name: '山莊1988馬鈴薯燉排骨', nameKr: '산장1988 서면점', addressKr: '부산 부산진구 동천로 85', time: '18:00', hours: '17:00 - 02:00', note: '【餐點推薦】招牌馬鈴薯燉排骨。湯頭極度濃郁，排骨一撥即落。逛完街剛好來吃熱呼呼的排骨湯！', transportType: 'walk', transportTime: '15m' }
+    { id: '7-1', type: 'normal', category: 'spot', name: '五六島天空步道', nameKr: '오륙도스카이워크', addressKr: '부산 남구 오륙도로 137', time: '09:30', hours: '09:00 - 18:00', ticket: '免費', note: '【必拍絕美海景】早上趁人少光線好先來看海！走在懸崖上的透明玻璃步道，遠眺五六島。', transportType: 'transit', transportTime: '40m' },
+    { id: '7-2', type: 'normal', category: 'shop', name: '最後大採購 (超市)', nameKr: '롯데마트 / 홈플러스', addressKr: '서면 인근 마트', time: '13:00', hours: '10:00 - 23:00 (注意每月第2/4週日公休)', note: '看完海回到西面先吃個午餐，接著去樂天超市或Homeplus最後補貨，買完戰利品剛好拿回飯店放。', transportType: 'transit', transportTime: '40m' },
+    { id: '7-4', type: 'normal', category: 'food', name: '山莊1988馬鈴薯燉排骨', nameKr: '산장1988 서면점', addressKr: '부산 부산진구 동천로 85', time: '17:00', hours: '17:00 - 02:00', note: '【餐點推薦】招牌馬鈴薯燉排骨。店家17:00開門直接來吃晚餐，吃飽才有力氣逛街！', transportType: 'walk', transportTime: '15m' },
+    { id: '7-3', type: 'normal', category: 'other', name: '西面地下街逛街', nameKr: '서면지하상가', addressKr: '부산 부산진구 서면', time: '18:30', hours: '10:00 - 22:00', note: '吃飽喝足後，來逛超好買的「西面地下街」，當作旅程完美的購物收尾！', transportType: 'walk', transportTime: '10m' }
   ],
   7: [
     { id: '8-1', type: 'normal', category: 'spot', name: '佰諾佰琪醫美療程', nameKr: '바노바기 부산', addressKr: '부산 부산진구 서면로 74 (아이온시티빌딩) 16층', time: '11:00', hours: '10:00 - 19:00', note: '詳細路線: 地鐵西面站 5, 7號出口 出站步行1分鐘', transportType: 'walk', transportTime: '10m' },
     { id: '8-2', type: 'normal', category: 'food', name: '大海鮑魚粥', nameKr: '바다전복죽 (或鄰近鮑魚粥)', addressKr: '부산 부산진구 부전동', time: '14:00', hours: '08:00 - 21:00', note: '【餐點推薦】招牌鮑魚粥。溫和營養的海鮮精華，非常適合術後修復享用！', transportType: 'walk', transportTime: '10m' },
-    { id: '8-3', type: 'flight', category: 'flight', name: 'PUS - TPE 航班 BX793', time: '22:10 - 00:15', flightTime: '3h05m', transportType: 'transit', transportTime: '0m' }
+    { id: '8-3', type: 'normal', category: 'other', name: '西面最後補買 / 拿行李', nameKr: '서면', addressKr: '부산 부산진구 서면', time: '15:30', note: '吃飽後可以在西面最後逛逛，或是回飯店整理行李，準備把退稅單跟戰利品塞好塞滿！', transportType: 'walk', transportTime: '10m' },
+    { id: '8-4', type: 'normal', category: 'transit', name: '出發前往金海機場 (辦理退稅)', nameKr: '김해국제공항', addressKr: '부산 강서구 공항진입로 108', time: '18:30', note: '【⚠️退稅注意】因須辦理退稅，強烈建議提早 3~3.5 小時抵達機場！退稅機與海關蓋章可能會大排長龍。', transportType: 'transit', transportTime: '50m' },
+    { id: '8-5', type: 'flight', category: 'flight', name: 'PUS - TPE 航班 BX793', time: '22:10 - 00:15', flightTime: '3h05m', transportType: 'transit', transportTime: '0m' }
   ]
 };
 
@@ -707,8 +713,8 @@ const app = createApp({
     // 資料狀態 (退回極速單機版，從 LocalStorage 載入，並安全防護)
     const tripDays = ref(initialTripDays);
     const weatherMock = ref(mockWeather);
-    // 自動繼承舊版的備份資料，確保心血不會不見
-    const itineraryData = ref(getLocalData('busan_itinerary_v15', getLocalData('busan_itinerary_v14', defaultItineraryData)));
+    // 自動載入 v27 最新行程 (Day 8 新增提早去機場退稅)
+    const itineraryData = ref(getLocalData('busan_itinerary_v27', getLocalData('busan_itinerary_v26', defaultItineraryData)));
     const shoppingList = ref(getLocalData('busan_shopping', []));
     const expenses = ref(getLocalData('busan_expense', []));
     const routeImages = ref(getLocalData('busan_route_images', {})); 
@@ -731,7 +737,7 @@ const app = createApp({
     const itineraryListRef = ref(null);
 
     // Watchers for LocalStorage (恢復單機即時極速儲存)
-    watch(itineraryData, (newVal) => { localStorage.setItem('busan_itinerary_v15', JSON.stringify(newVal)); }, { deep: true });
+    watch(itineraryData, (newVal) => { localStorage.setItem('busan_itinerary_v27', JSON.stringify(newVal)); }, { deep: true });
     watch(shoppingList, (newVal) => { localStorage.setItem('busan_shopping', JSON.stringify(newVal)); }, { deep: true });
     watch(expenses, (newVal) => { localStorage.setItem('busan_expense', JSON.stringify(newVal)); }, { deep: true });
     watch(routeImages, (newVal) => { localStorage.setItem('busan_route_images', JSON.stringify(newVal)); }, { deep: true });
